@@ -2,37 +2,49 @@
 class FeedItem_Atom extends FeedItem_Common {
 
 	function get_id() {
+		if( isset($this->id ) ){
+			return $this->id;
+		}
+
 		$id = $this->elem->getElementsByTagName("id")->item(0);
 
 		if ($id) {
-			return $id->nodeValue;
+			return $this->set_id($id->nodeValue);
 		} else {
-			return $this->get_link();
+			return $this->set_id($this->get_link());
 		}
 	}
 
 	function get_date() {
+		if( isset($this->date ) ){
+			return $this->date;
+		}
+
 		$updated = $this->elem->getElementsByTagName("updated")->item(0);
 
 		if ($updated) {
-			return strtotime($updated->nodeValue);
+			return $this->set_date(strtotime($updated->nodeValue));
 		}
 
 		$published = $this->elem->getElementsByTagName("published")->item(0);
 
 		if ($published) {
-			return strtotime($published->nodeValue);
+			return $this->set_date(strtotime($published->nodeValue));
 		}
 
 		$date = $this->xpath->query("dc:date", $this->elem)->item(0);
 
 		if ($date) {
-			return strtotime($date->nodeValue);
+			return $this->set_date(strtotime($date->nodeValue));
 		}
 	}
 
 
 	function get_link() {
+		if( isset($this->link ) ){
+			return $this->link;
+		}
+
 		$links = $this->elem->getElementsByTagName("link");
 
 		foreach ($links as $link) {
@@ -43,23 +55,31 @@ class FeedItem_Atom extends FeedItem_Common {
 				$base = $this->xpath->evaluate("string(ancestor-or-self::*[@xml:base][1]/@xml:base)", $link);
 
 				if ($base)
-					return rewrite_relative_url($base, trim($link->getAttribute("href")));
+					return $this->set_link(rewrite_relative_url($base, trim($link->getAttribute("href"))));
 				else
-					return trim($link->getAttribute("href"));
+					return $this->set_link(trim($link->getAttribute("href")));
 
 			}
 		}
 	}
 
 	function get_title() {
+		if( isset($this->title ) ){
+			return $this->title;
+		}
+
 		$title = $this->elem->getElementsByTagName("title")->item(0);
 
 		if ($title) {
-			return trim($title->nodeValue);
+			return $this->set_title(trim($title->nodeValue));
 		}
 	}
 
 	function get_content() {
+		if( isset($this->content ) ){
+			return $this->content;
+		}
+
 		$content = $this->elem->getElementsByTagName("content")->item(0);
 
 		if ($content) {
@@ -69,17 +89,21 @@ class FeedItem_Atom extends FeedItem_Common {
 						$child = $content->childNodes->item($i);
 
 						if ($child->hasChildNodes()) {
-							return $this->doc->saveXML($child);
+							return $this->set_content($this->doc->saveXML($child));
 						}
 					}
 				}
 			}
 
-			return $content->nodeValue;
+			return $this->set_content($content->nodeValue);
 		}
 	}
 
 	function get_description() {
+		if( isset($this->description ) ){
+			return $this->description;
+		}
+
 		$content = $this->elem->getElementsByTagName("summary")->item(0);
 
 		if ($content) {
@@ -89,18 +113,22 @@ class FeedItem_Atom extends FeedItem_Common {
 						$child = $content->childNodes->item($i);
 
 						if ($child->hasChildNodes()) {
-							return $this->doc->saveXML($child);
+							return $this->set_description($this->doc->saveXML($child));
 						}
 					}
 				}
 			}
 
-			return $content->nodeValue;
+			return $this->set_description($content->nodeValue);
 		}
 
 	}
 
 	function get_categories() {
+		if( isset($this->categories ) ){
+			return $this->categories;
+		}
+
 		$categories = $this->elem->getElementsByTagName("category");
 		$cats = array();
 
@@ -115,10 +143,14 @@ class FeedItem_Atom extends FeedItem_Common {
 			array_push($cats, trim($cat->nodeValue));
 		}
 
-		return $cats;
+		return $this->set_categories($cats);
 	}
 
 	function get_enclosures() {
+		if( isset($this->enclosures ) ){
+			return $this->enclosures;
+		}
+
 		$links = $this->elem->getElementsByTagName("link");
 
 		$encs = array();
@@ -188,7 +220,7 @@ class FeedItem_Atom extends FeedItem_Common {
 			array_push($encs, $enc);
 		}
 
-		return $encs;
+		return $this->set_enclosures($encs);
 	}
 
 }
