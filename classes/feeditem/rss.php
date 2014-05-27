@@ -19,7 +19,7 @@ class FeedItem_RSS extends FeedItem_Common {
 			return $this->date;
 		}
 
-		$pubDate = $this->set_date($this->elem->getElementsByTagName("pubDate")->item(0));
+		$pubDate = $this->elem->getElementsByTagName("pubDate")->item(0);
 
 		if ($pubDate) {
 			return $this->set_date(strtotime($pubDate->nodeValue));
