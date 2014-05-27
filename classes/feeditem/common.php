@@ -35,8 +35,8 @@ abstract class FeedItem_Common extends FeedItem {
 		}
 	}
 	function get_author() {
-		if( isset($this->$author_value) ){
-			return $this->$author_value;
+		if( isset($this->author_value) ){
+			return $this->author_value;
 		}
 		$author = $this->elem->getElementsByTagName("author")->item(0);
 
@@ -66,8 +66,8 @@ abstract class FeedItem_Common extends FeedItem {
 	}
 
 	function get_comments_url() {
-		if( isset($this->$comments_url ) ){
-			return $this->$comments_url;
+		if( isset($this->comments_url ) ){
+			return $this->comments_url;
 		}
 		
 		//RSS only. Use a query here to avoid namespace clashes (e.g. with slash).
@@ -86,8 +86,8 @@ abstract class FeedItem_Common extends FeedItem {
 	}
 
 	function get_comments_count() {
-		if( isset($this->$comments_count) ){
-			return $this->$comments_count;
+		if( isset($this->comments_count) ){
+			return $this->comments_count;
 		}
 		
 		//also query for ATE stuff here
@@ -100,49 +100,49 @@ abstract class FeedItem_Common extends FeedItem {
 	}
 	
 	function set_author($author) {
-		$this->$author = $author;
-		return $this->$author;
+		$this->author = $author;
+		return $this->author;
 		
 	}
 	function set_comments_url($url) {
-		$this->$comments_url = $url;
-		return $this->$comments_url;
+		$this->comments_url = $url;
+		return $this->comments_url;
 	}
 	function set_comments_count($count) {
-		$this->$comments_count = $count;
-		return $this->$comments_count;
+		$this->comments_count = $count;
+		return $this->comments_count;
 	}
 	function set_id($id) {
-		$this->$id = $id;
-		return $this->$id;
+		$this->id = $id;
+		return $this->id;
 	}
 	function set_date($date) {
-		$this->$date = $date;
-		return $this->$date;
+		$this->date = $date;
+		return $this->date;
 	}
 	function set_link($link) {
-		$this->$link = $link;
-		return $this->$link;
+		$this->link = $link;
+		return $this->link;
 	}
 	function set_title($title) {
-		$this->$title = $title;
-		return $this->$title;
+		$this->title = $title;
+		return $this->title;
 	}
 	function set_content($content) {
-		$this->$content = $content;
-		return $this->$content;
+		$this->content = $content;
+		return $this->content;
 	}
 	function set_description($description) {
-		$this->$description = $description;
-		return $this->$description;
+		$this->description = $description;
+		return $this->description;
 	}
 	function set_categories($categories) {
-		$this->$categories = $categories;
-		return $this->$categories;
+		$this->categories = $categories;
+		return $this->categories;
 	}
 	function set_enclosures($enclosures) {
-		$this->$enclosures = $enclosures;
-		return $this->$enclosures;
+		$this->enclosures = $enclosures;
+		return $this->enclosures;
 	}
 
 }
